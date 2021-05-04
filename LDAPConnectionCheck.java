@@ -92,8 +92,8 @@ public class LDAPConnectionCheck {
         try {
             ctx = new InitialDirContext(environment);
 
-            System.out.println("Checking whether the user " + username + "exists in LDAP");
-            String searchFilter = "(&(objectClass=person)(uid=" + username + "))";
+            System.out.println("Checking whether the user " + username + " exists in LDAP");
+            String searchFilter = "(&(objectClass=user)(|(userPrincipalName=" + username + ")(sAMAccountName=" + username + ")(mail=" + username + ")(cn=" + username + ")))";
             //String searchFilter = "(&(objectClass=person)(cn=admin))";
             SearchControls searchControls = new SearchControls();
             searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
@@ -103,13 +103,13 @@ public class LDAPConnectionCheck {
                 SearchResult searchResult = null;
                 try {
                     searchResult = results.next();
-                    System.out.println("User exits LDAP : " + searchResult.getNameInNamespace());
+                    System.out.println("User exists in LDAP : " + searchResult.getNameInNamespace());
                 } catch (Exception e) {
                     System.out.println("Error occurred during getting user information");
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("User " + username + " does not exists in LDAP. So existing");
+                System.out.println("User " + username + " does not exists in LDAP. So exiting");
                 System.exit(1);
             }
         } catch (NamingException e) {
