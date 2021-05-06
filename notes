@@ -1,0 +1,5 @@
+$ZipFile = "ldaps_test.zip"
+New-Item $ZipFile -ItemType File -Force
+$RepositoryZipUrl = "https://github.com/KevinIlPazzo/LDAPConnectionCheck/archive/refs/heads/master.zip"
+Invoke-RestMethod -Uri $RepositoryZipUrl -OutFile $ZipFile
+Expand-Archive -LiteralPath .\ldaps_test.zip -DestinationPath ldap_test
